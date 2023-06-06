@@ -25,6 +25,7 @@ namespace GameCaro_Chat
         public GameCaro()
         {
             InitializeComponent();
+            
             Control.CheckForIllegalCrossThreadCalls = false;
             ChessBoard = new BoardManager(pnlChessBoard,txbName, pbAvatar);
             ChessBoard.GameOver += ChessBoard_GameOver;
