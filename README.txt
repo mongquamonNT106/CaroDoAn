@@ -9,3 +9,4 @@
 -Có 2 hình thức thắng: thắng nếu đạt 5 nút thẳng hàng hoặc khi đối thủ hết thời gian, dựa vào loại hình thức thắng thì sẽ hiện thông báo thắng khác nhau.
 -Khung Chat: Giúp cho 2 player có thể giao tiếp với nhau khi ở chế độ LAN.
 -Nếu như chương trình thông báo thiếu file Resources thì có thể copy file Resources ở bên ngoài file Bin, hoặc tải trên Drive của nhóm:  https://drive.google.com/drive/folders/1kWhB6aI3yeMQbJbBk7-e897quTuU_1uc?fbclid=IwAR3fE0JvnGYt6wQxSHC4xX6TtMK0bjHfTCNUJSh6iLT0Tk3hw7vxCQnZ-tM
+-Nếu như khi chạy file Visual Studio và chương trình thông báo lỗi là do khi tải về, file ảnh trong Resources có thể bị dính “mark of the Internet” thì cứ chọn Yes.
