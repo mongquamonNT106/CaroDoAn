@@ -32,6 +32,7 @@ namespace GameCaro_Chat
         SEND_MESSAGE,
         SEND_NEW_GAME,
         SEND_END_GAME,
+        SEND_TIME_OUT,
         SEND_UNDO,
         SEND_REDO,
         QUIT

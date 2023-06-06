@@ -84,10 +84,12 @@ namespace GameCaro_Chat
         #region Methods
         public void DrawChessBoard()
         {   
-            ChessBoard.Controls.Clear();
-            Matrix = new List<List<Button>>();
+            ChessBoard.Controls.Clear(); 
+
+
+            Matrix = new List<List<Button>>(); 
             UndoStack = new Stack<PlayInfo>();
-            RedoStack = new Stack<PlayInfo>();
+            RedoStack = new Stack<PlayInfo>(); 
             this.CurrentPlayer = 0;
             ChangePlayer();
             Button oldbtn = new Button()
@@ -137,11 +139,6 @@ namespace GameCaro_Chat
                 ChessBoard.Enabled = false;
                 EndGame();  
             }
-            //if (!(vsAI) && gameMode == 3)
-
-            
-               // vsAI = false;
-            
         }
 
         #region undo+redo
@@ -237,9 +234,9 @@ namespace GameCaro_Chat
 
         private bool isEndGame(Button btn)
         {
-            return isEndHorizontal(btn) || isEndVertical(btn) || isEndPrimary(btn) || isEndSub(btn);
+            return checkHorizontal(btn) || checkVertical(btn) || checkPrimary(btn) || checkSub(btn);
         }
-        private bool isEndSub(object btn)
+        private bool checkSub(object btn)
         {
             Button button = btn as Button;
             int x = Convert.ToInt32(button.Tag);
@@ -270,7 +267,7 @@ namespace GameCaro_Chat
             }
             return countUp + countDown >= 5 ? true : false;
         }
-        private bool isEndPrimary(object btn)
+        private bool checkPrimary(object btn)
         {
             Button button = btn as Button;
             int x = Convert.ToInt32(button.Tag);
@@ -301,7 +298,7 @@ namespace GameCaro_Chat
             }
             return countUp + countDown >= 5 ? true : false;
         }
-        private bool isEndVertical(object btn)
+        private bool checkVertical(object btn)
         {
             Button button = btn as Button;
             int x = Convert.ToInt32(button.Tag);
@@ -330,7 +327,7 @@ namespace GameCaro_Chat
             }
             return countLeft + countRight >= 5 ? true : false;
         }
-        private bool isEndHorizontal(object btn)
+        private bool checkHorizontal(object btn)
         {
             Button button = btn as Button;
             int x = Convert.ToInt32(button.Tag);
@@ -373,7 +370,5 @@ namespace GameCaro_Chat
         }
 
         #endregion
-
-
     }
 }

@@ -56,6 +56,9 @@
             this.btnUndo = new System.Windows.Forms.Button();
             this.btnRedo = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txb_Type = new System.Windows.Forms.TextBox();
+            this.txb_Chat = new System.Windows.Forms.RichTextBox();
+            this.btn_Send = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pbAvatar)).BeginInit();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -65,7 +68,7 @@
             // pnlChessBoard
             // 
             this.pnlChessBoard.BackColor = System.Drawing.Color.Gray;
-            this.pnlChessBoard.Location = new System.Drawing.Point(28, 27);
+            this.pnlChessBoard.Location = new System.Drawing.Point(27, 51);
             this.pnlChessBoard.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pnlChessBoard.Name = "pnlChessBoard";
             this.pnlChessBoard.Size = new System.Drawing.Size(875, 529);
@@ -74,10 +77,10 @@
             // pbAvatar
             // 
             this.pbAvatar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbAvatar.Location = new System.Drawing.Point(248, 53);
+            this.pbAvatar.Location = new System.Drawing.Point(255, 64);
             this.pbAvatar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbAvatar.Name = "pbAvatar";
-            this.pbAvatar.Size = new System.Drawing.Size(208, 144);
+            this.pbAvatar.Size = new System.Drawing.Size(177, 144);
             this.pbAvatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pbAvatar.TabIndex = 1;
             this.pbAvatar.TabStop = false;
@@ -86,7 +89,7 @@
             // 
             this.txbName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txbName.Enabled = false;
-            this.txbName.Location = new System.Drawing.Point(14, 64);
+            this.txbName.Location = new System.Drawing.Point(5, 64);
             this.txbName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txbName.Name = "txbName";
             this.txbName.Size = new System.Drawing.Size(214, 26);
@@ -96,7 +99,8 @@
             // pbTimer
             // 
             this.pbTimer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbTimer.Location = new System.Drawing.Point(13, 123);
+            this.pbTimer.ForeColor = System.Drawing.Color.IndianRed;
+            this.pbTimer.Location = new System.Drawing.Point(4, 123);
             this.pbTimer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.pbTimer.Name = "pbTimer";
             this.pbTimer.Size = new System.Drawing.Size(215, 26);
@@ -105,11 +109,12 @@
             // txbIP
             // 
             this.txbIP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txbIP.Location = new System.Drawing.Point(14, 182);
+            this.txbIP.Location = new System.Drawing.Point(5, 182);
             this.txbIP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txbIP.Name = "txbIP";
             this.txbIP.Size = new System.Drawing.Size(214, 26);
             this.txbIP.TabIndex = 4;
+            this.txbIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // panel1
             // 
@@ -121,11 +126,12 @@
             this.panel1.Controls.Add(this.txbIP);
             this.panel1.Controls.Add(this.txbName);
             this.panel1.Controls.Add(this.pbTimer);
-            this.panel1.Location = new System.Drawing.Point(910, 51);
+            this.panel1.Location = new System.Drawing.Point(919, 51);
             this.panel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(460, 231);
+            this.panel1.Size = new System.Drawing.Size(451, 231);
             this.panel1.TabIndex = 5;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // label4
             // 
@@ -177,7 +183,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1385, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1663, 28);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -256,10 +262,10 @@
             // 
             // LAN
             // 
-            this.LAN.Location = new System.Drawing.Point(205, 22);
+            this.LAN.Location = new System.Drawing.Point(144, 0);
             this.LAN.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.LAN.Name = "LAN";
-            this.LAN.Size = new System.Drawing.Size(260, 45);
+            this.LAN.Size = new System.Drawing.Size(152, 45);
             this.LAN.TabIndex = 7;
             this.LAN.Text = "2 PLAYER LAN";
             this.LAN.UseVisualStyleBackColor = true;
@@ -267,17 +273,17 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(205, 73);
+            this.button1.Location = new System.Drawing.Point(144, 51);
             this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(260, 50);
+            this.button1.Size = new System.Drawing.Size(152, 50);
             this.button1.TabIndex = 8;
             this.button1.Text = "2 PLAYER 1 PC";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // btnNew
             // 
-            this.btnNew.Location = new System.Drawing.Point(18, 22);
+            this.btnNew.Location = new System.Drawing.Point(18, 0);
             this.btnNew.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(118, 26);
@@ -288,7 +294,7 @@
             // 
             // btnUndo
             // 
-            this.btnUndo.Location = new System.Drawing.Point(18, 54);
+            this.btnUndo.Location = new System.Drawing.Point(18, 41);
             this.btnUndo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnUndo.Name = "btnUndo";
             this.btnUndo.Size = new System.Drawing.Size(118, 26);
@@ -316,11 +322,39 @@
             this.panel2.Controls.Add(this.btnNew);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.LAN);
-            this.panel2.Location = new System.Drawing.Point(910, 346);
+            this.panel2.Location = new System.Drawing.Point(919, 337);
             this.panel2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(465, 243);
+            this.panel2.Size = new System.Drawing.Size(306, 243);
             this.panel2.TabIndex = 13;
+            // 
+            // txb_Type
+            // 
+            this.txb_Type.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txb_Type.Location = new System.Drawing.Point(1218, 554);
+            this.txb_Type.Name = "txb_Type";
+            this.txb_Type.Size = new System.Drawing.Size(342, 25);
+            this.txb_Type.TabIndex = 13;
+            // 
+            // txb_Chat
+            // 
+            this.txb_Chat.Enabled = false;
+            this.txb_Chat.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txb_Chat.Location = new System.Drawing.Point(1232, 302);
+            this.txb_Chat.Name = "txb_Chat";
+            this.txb_Chat.Size = new System.Drawing.Size(410, 232);
+            this.txb_Chat.TabIndex = 14;
+            this.txb_Chat.Text = "";
+            // 
+            // btn_Send
+            // 
+            this.btn_Send.Location = new System.Drawing.Point(1566, 551);
+            this.btn_Send.Name = "btn_Send";
+            this.btn_Send.Size = new System.Drawing.Size(94, 29);
+            this.btn_Send.TabIndex = 15;
+            this.btn_Send.Text = "SEND";
+            this.btn_Send.UseVisualStyleBackColor = true;
+            this.btn_Send.Click += new System.EventHandler(this.btn_Send_Click);
             // 
             // GameCaro
             // 
@@ -328,7 +362,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::GameCaro_Chat.Properties.Resources.background;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1385, 599);
+            this.ClientSize = new System.Drawing.Size(1663, 599);
+            this.Controls.Add(this.btn_Send);
+            this.Controls.Add(this.txb_Chat);
+            this.Controls.Add(this.txb_Type);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnlChessBoard);
@@ -338,7 +375,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "GameCaro";
-            this.Text = " ";
+            this.Text = "GameCaro";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Shown += new System.EventHandler(this.Form1_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.pbAvatar)).EndInit();
@@ -381,5 +418,8 @@
         private Label label3;
         private Label label2;
         private Label label1;
+        private TextBox txb_Type;
+        private RichTextBox txb_Chat;
+        private Button btn_Send;
     }
 }

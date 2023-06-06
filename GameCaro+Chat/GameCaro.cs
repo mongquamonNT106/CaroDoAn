@@ -16,7 +16,8 @@ namespace GameCaro_Chat
     {
         #region properties
         BoardManager ChessBoard;
-        string PlayerName;
+        string winner_timeout;
+        string winner;
         SocketManager socket;
         int undolimit;
         int redolimit;
@@ -32,9 +33,10 @@ namespace GameCaro_Chat
             pbTimer.Maximum = Cons.TIMER_sum;
             pbTimer.Value = 0;
             Cooldown.Interval = Cons.TIME_INTERVAL;
-            //ChessBoard.DrawChessBoard();
-            //Cooldown.Start();
+            
             socket = new SocketManager();
+            
+            txb_Chat.Text = "";
             NewGame();
         }
 
@@ -42,11 +44,9 @@ namespace GameCaro_Chat
         {
             Cooldown.Start();
             pbTimer.Value = 0;
+            
             undolimit = 1;
-            //pnlChessBoard.Enabled = false;
-            //socket.Send(new SocketData((int)SendCommand.SEND_LOCATION, e.ClickedPoint,""));
-            //Listen();
-
+            
             if (ChessBoard.GameMode == 1)
             {
                 try
@@ -65,7 +65,7 @@ namespace GameCaro_Chat
                 catch
                 {
                     GameEnd();
-                    MessageBox.Show("Không có kết nối nào tới máy đối thủ", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Hiện tại không có kết nối !!", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
@@ -77,27 +77,42 @@ namespace GameCaro_Chat
         {
             Cooldown.Stop();
             pnlChessBoard.Enabled = false;
-            //MessageBox.Show("Game Clear");
+            undoToolStripMenuItem.Enabled = false;
+            redoToolStripMenuItem.Enabled = false;
+            btnUndo.Enabled = false;
+            btnRedo.Enabled = false;
             if (ChessBoard.GameMode != 1)
             {
-                MessageBox.Show("Trò chơi kết thúc \n");
+                MessageBox.Show("Trò chơi kết thúc !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            PlayerName = ChessBoard.Players[ChessBoard.CurrentPlayer == 1 ? 0 : 1].Name;
+            
             
         }
         private void ChessBoard_GameOver(object? sender, EventArgs e)
         {
             GameEnd();
             if (ChessBoard.GameMode == 1)
-                socket.Send(new SocketData((int)SendCommand.SEND_END_GAME, new Point(),""));
+            {   
+                winner = ChessBoard.Players[ChessBoard.CurrentPlayer == 1 ? 0 : 1].Name;
+
+                socket.Send(new SocketData((int)SendCommand.SEND_END_GAME, new Point(), ""));
+            }
         }
 
         private void Cooldown_Tick(object sender, EventArgs e)
         {
+            pbTimer.ForeColor = Color.Red;
             pbTimer.PerformStep();
             if(pbTimer.Value >=pbTimer.Maximum)
             {   
+            
+                if (ChessBoard.GameMode == 1)
+                {
+                    
+                    socket.Send(new SocketData((int)SendCommand.SEND_TIME_OUT, new Point(), ""));
+                }
                 GameEnd();
+                MessageBox.Show("Hết giờ !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -108,7 +123,7 @@ namespace GameCaro_Chat
             pbTimer.Value = 0;
             pnlChessBoard.Enabled = true;
             ChessBoard.DrawChessBoard();
-            // Cooldown.Start();
+            
         }
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -204,10 +219,10 @@ namespace GameCaro_Chat
 
         private void DataCase(SocketData e)
         {
-            PlayerName = ChessBoard.Players[ChessBoard.CurrentPlayer==1 ? 0 : 1].Name;
-
-            switch(e.Command)
-            {
+            winner_timeout = ChessBoard.Players[ChessBoard.CurrentPlayer == 1 ? 0 : 1].Name;
+            
+            switch (e.Command)
+            {   
                 case (int)SendCommand.SEND_LOCATION:
                     this.Invoke((MethodInvoker)(() =>
                     {
@@ -244,15 +259,15 @@ namespace GameCaro_Chat
                     this.Invoke((MethodInvoker)(() =>
                     {
                         pbTimer.Value = 0;
-                        ChessBoard.Undo();
-                        MessageBox.Show("Đối thủ vừa sử dụng chức năng Undo", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ChessBoard.Redo();
+                        MessageBox.Show("Đối thủ vừa sử dụng chức năng Redo", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }));
                     break;
                 case (int)SendCommand.SEND_END_GAME:
                     this.Invoke((MethodInvoker)(() =>
                     {
                         GameEnd();
-                        MessageBox.Show(PlayerName + " đã chiến thắng  !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show(winner + " đã chiến thắng  !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }));
                     break;
                 case (int)SendCommand.QUIT:
@@ -267,7 +282,17 @@ namespace GameCaro_Chat
                         MessageBox.Show("Đối thủ đã rời khỏi phòng", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }));
                     break;
-
+                case (int)SendCommand.SEND_TIME_OUT:
+                    this.Invoke((MethodInvoker)(() =>
+                    {
+                        Cooldown.Stop();
+                        GameEnd();
+                        MessageBox.Show("Thời gian kết thúc, " + winner_timeout + " thắng !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }));
+                    break;
+                case (int)SendCommand.SEND_MESSAGE:
+                    txb_Chat.Text += "Player: " + e.Message + "\n";
+                    break;
                 default:
                     break;
 
@@ -305,14 +330,14 @@ namespace GameCaro_Chat
                 socket.IsServer = true;
                 pnlChessBoard.Enabled = true;
                 socket.HostServer();
-                MessageBox.Show("Bạn đang là Server", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Tạo phòng thành công !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
                 socket.IsServer = false;
                 pnlChessBoard.Enabled = false;
                 Listen();
-                MessageBox.Show("Kết nối thành công !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Đã kết nối vào phòng chơi !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -342,6 +367,22 @@ namespace GameCaro_Chat
         private void btnNew_Click(object sender, EventArgs e)
         {
             newGameToolStripMenuItem_Click(sender, e);
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btn_Send_Click(object sender, EventArgs e)
+        {
+            if(ChessBoard.GameMode != 1) 
+                return;
+            
+            txb_Chat.Text += "You: " + txb_Type.Text + "\n";
+            socket.Send(new SocketData((int)SendCommand.SEND_MESSAGE,  new Point(), txb_Type.Text));
+            txb_Type.Clear();
+            Listen();
         }
     }
 }
