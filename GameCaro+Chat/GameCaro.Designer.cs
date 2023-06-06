@@ -330,16 +330,16 @@
             // 
             // txb_Type
             // 
-            this.txb_Type.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txb_Type.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txb_Type.Location = new System.Drawing.Point(1218, 554);
             this.txb_Type.Name = "txb_Type";
-            this.txb_Type.Size = new System.Drawing.Size(342, 25);
+            this.txb_Type.Size = new System.Drawing.Size(342, 30);
             this.txb_Type.TabIndex = 13;
             // 
             // txb_Chat
             // 
             this.txb_Chat.Enabled = false;
-            this.txb_Chat.Font = new System.Drawing.Font("Arial Narrow", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txb_Chat.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.txb_Chat.Location = new System.Drawing.Point(1232, 302);
             this.txb_Chat.Name = "txb_Chat";
             this.txb_Chat.Size = new System.Drawing.Size(410, 232);

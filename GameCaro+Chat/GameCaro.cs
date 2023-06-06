@@ -270,6 +270,7 @@ namespace GameCaro_Chat
                         MessageBox.Show(winner + " đã chiến thắng  !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }));
                     break;
+               
                 case (int)SendCommand.QUIT:
                     this.Invoke((MethodInvoker)(() =>
                     {
@@ -336,8 +337,10 @@ namespace GameCaro_Chat
             {
                 socket.IsServer = false;
                 pnlChessBoard.Enabled = false;
+               
                 Listen();
                 MessageBox.Show("Đã kết nối vào phòng chơi !!!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
             }
         }
 
